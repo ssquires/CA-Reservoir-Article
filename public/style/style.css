@@ -11,6 +11,22 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 16px;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+p {
+    font-size: 12px;
+    margin: 5px;
+}
+
 #buttons-and-text {
     text-align: center;
     display: flex;
@@ -24,10 +40,32 @@ h1 {
 }
 
 #graphic {
-    width: 500px;
-    height: 300px;
+    width: 580px;
+    height: 400px;
     text-align: center;
     margin: auto;
+    align-items: center;
+}
+
+#gauges {
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    margin: 0;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+#vizContainer {
+    display: flex;
+}
+
+#map {
+    width: 250px;
+    height: 300px;
+/*    background-color: #0D7AC4;*/
+    margin: 0;
+    display: inline-block;
 }
 
 img {
@@ -43,3 +81,67 @@ button {
     margin-top: 50px;
 }
 
+.chart {
+    display: inline-block;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+input {
+    display: block;
+    margin: auto;
+}
+
+#sliderContainer {
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 7px;
+    border-radius: 4px;   
+    background: #EEE;
+    outline: none;
+    opacity: 1;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin-top: 10px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%; 
+    background: #0D7AC4;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #0D7AC4;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: absolute;
+}
+
+.chart circle, .chart path {
+    transition: fill .5s, stroke .5s;
+}
+
+.chartSVG * {
+    pointer-events: none;
+}
+
+.res {
+    transition: fill .5s, stroke .5s;
+}

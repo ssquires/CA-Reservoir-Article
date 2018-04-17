@@ -40,6 +40,7 @@ function prevSlide() {
 
 function changeSlide(slideNum) {
     clearSlides();
+    $("#graphic").empty();
     $("#slide-" + slideNum).css("display", "block");
     slideFuncs[slideNum - 1]();
 }

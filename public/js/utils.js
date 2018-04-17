@@ -19,8 +19,6 @@ function makePieCharts(dataFile, width, height, maxCharts) {
         // Create pie charts
         var chartNum = 0;
         for (var key in resData[0]) {
-            console.log(key);
-            console.log(resData[0][key]);
             if (key === "PDSI") {
                 continue;
             }
@@ -74,8 +72,6 @@ function makeFillGauges(dataFile, width, height, maxCharts, containerDiv, mapDiv
         // Create fill gauges
         var chartNum = 0;
         for (var key in resData[0]) {
-            console.log(key);
-            console.log(resData[0][key]);
             if (key === "PDSI") {
                 continue;
             }
@@ -95,8 +91,23 @@ function makeFillGauges(dataFile, width, height, maxCharts, containerDiv, mapDiv
             
             var chartID = "chart-" + key;
             // Create a new div for the chart
-            var d = $("<svg id='" + chartID + "' width='" + width + "' height='" + height + "' onclick='gauge5.update(NewValue());'></svg>");
+            var d = $("<svg class='chartSVG' id='" + chartID + "' width='" + width + "' height='" + height + "' onclick='gauge5.update(NewValue());'></svg>");
             chartDiv.append(d);
+            d.mouseover(function(e) {
+                console.log("mouseover");
+                var resName = e.target.id.split("-")[1];
+                console.log(resName)
+                $("#" + resName).attr("style", "fill: orange; stroke: orange;");
+                console.log($("#" + resName));
+                $("#" + e.target.id + " circle").attr("style", "fill: orange;");
+                $("#" + e.target.id + " path").attr("style", "fill: orange;");
+            });
+            d.mouseout(function(e) {
+                var resName = e.target.id.split("-")[1];
+                $("#" + resName).attr("style", "fill: #FFF; stroke: #FFF;");
+                $("#" + e.target.id + " circle").attr("style", "fill: #0D7AC4;");
+                $("#" + e.target.id + " path").attr("style", "fill: #0D7AC4;");
+            });
             
             var config = liquidFillGaugeDefaultSettings();
             config.circleThickness = 0.05;
@@ -192,9 +203,11 @@ function makeMap(containerDivID) {
             .attr("id", "ca-map");
         
         d3.json("reservoir_data.json", function(err, data) {
-            
+            console.log(data);
             svg.selectAll('.res')
-            .data(data)
+            .data(data.filter(function(resObj) {
+                return resNames.includes(resObj.Name);
+            }))
             .enter().append('circle')
             .attr('cx', function (d) { return projection([d.Longitude, d.Latitude])[0]})
             .attr('cy', function (d) { return projection([d.Longitude, d.Latitude])[1]})
@@ -202,9 +215,6 @@ function makeMap(containerDivID) {
             .attr('fill', '#FFF')
             .attr('stroke', '#FFF')
             .attr('id', function(d) { return d.Name })
-            .attr('opacity', function(d) {
-                if (resNames.includes(d.Name)) return 1; return 0;
-             })
             .attr('class', 'res')
             .on("mouseover", reservoirMouseover)
             .on("mouseout", reservoirMouseout);
@@ -231,15 +241,17 @@ function reservoirMouseover(d) {
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY) - 30 + "px")
             .style("color","white")
-            .style("background-color", "rgba(0, 0, 0, 0.5)");
+            .style("background-color", "rgba(0, 0, 0, 0.5)")
+            .style("pointer-events", "auto");
     
-    console.log(gauges[d.Name]);
     $("#chart-" + d.Name + " circle").attr("style", "fill: orange;");
+    $("#chart-" + d.Name + " path").attr("style", "fill: orange;");
     $("#" + d.Name).attr("style", "fill: orange; stroke: orange;");
 } 
 
 function reservoirMouseout(d) {
-    tooltip.transition().duration(500).style("opacity", 0).style("left", -100);
+    tooltip.transition().duration(500).style("opacity", 0).style("pointer-events", "none");
     $("#chart-" + d.Name + " circle").attr("style", "fill: #0D7AC4;");
+    $("#chart-" + d.Name + " path").attr("style", "fill: #0D7AC4;");
     $("#" + d.Name).attr("style", "fill: #FFF; stroke: #FFF;");
 }

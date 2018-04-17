@@ -1,4 +1,6 @@
 function slide6() {
     console.log("Displaying Slide 6");
-    $("#placeholder").attr("src", "slide6.png");
+    var placeholder = $("<img id='placeholder' width='100%'>");
+    placeholder.attr("src", "slide6.png");
+    $("#graphic").append(placeholder);
 }
