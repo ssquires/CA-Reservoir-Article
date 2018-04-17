@@ -145,3 +145,13 @@ input {
 .res {
     transition: fill .5s, stroke .5s;
 }
+
+.domain {
+    stroke-width: 2;
+    stroke: black;
+    fill: none;
+}
+
+#line-graph {
+    margin-top: 50px;
+}

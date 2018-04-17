@@ -255,3 +255,77 @@ function reservoirMouseout(d) {
     $("#chart-" + d.Name + " path").attr("style", "fill: #0D7AC4;");
     $("#" + d.Name).attr("style", "fill: #FFF; stroke: #FFF;");
 }
+
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////// LINE CHARTS /////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+function makeLineChart(containerDivID, dataFile, resNames, resColors, pauseDate, stopDate, callback) {
+    var margin = {top: 30, right: 20, bottom: 30, left: 50};
+    
+    var width = 500, height = 200;
+    var svg = d3.select(containerDivID)
+                .append('svg')
+                    .attr('width', width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .attr("id", "line-graph")
+                .append("g")
+                    .attr("transform", 
+                    "translate(" + margin.left + "," + margin.top + ")");
+    
+    var x = d3.time.scale().rangeRound([0, width]);
+    var y = d3.scale.linear().rangeRound([height, 0]);
+    
+    var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(5);
+
+    var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
+    
+    var parseDate = d3.time.format("%B %Y").parse
+    
+    
+    
+    d3.json(dataFile, function(err, data) {
+        if (err) return console.error(err);
+        
+        x.domain(d3.extent(data, function(d) {
+            return parseDate(d["date"])}));
+        y.domain([0, 100]);
+        
+        var pauseDateXCoord = x(parseDate(pauseDate));
+        var stopDateXCoord = x(parseDate(stopDate));
+
+        var totalLength;
+        for (var i = 0; i < resNames.length; i++) {
+            var resName = resNames[i];
+            var resColor = resColors[i];
+            var line = d3.svg.line()
+                .x(function(d) { return x(parseDate(d["date"])) })
+                .y(function(d) { return y(d[resName][0]["percent"])});
+            var path = svg.append("path").attr("class", "line")
+                .attr("fill", "none")
+                .attr("stroke", resColor)
+                .attr("stroke-width", 2)
+                .attr("d", line(data));
+        }
+        
+        var curtain = svg.append("rect")
+            .attr("fill", "#FFF")
+            .attr("stroke", "none")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("x", 0);
+    
+        curtain.transition().duration(6000).ease("linear").attr("x", pauseDateXCoord);
+        
+        
+
+        svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis);
+        
+        svg.append("g").attr("class", "y axis").call(yAxis);
+        
+        callback({"curtain": curtain, "stopDateXCoord": stopDateXCoord});
+    });
+    
+}

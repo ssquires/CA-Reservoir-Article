@@ -1,22 +1,13 @@
+var curtain;
+var stopXCoord;
+
 function slide2() {
     console.log("Displaying Slide 2");
-    $("#graphic").append('<svg id="fillgauge5" width="100%" height="200" onclick="gauge5.update(NewValue());"></svg>');
+    makeLineChart("#graphic", "historical_data.json", ["EXC", "ORO", "COY"], ["#0DC1F2", "#0D7AC4", "#0B55C4"], "June 2014", "December 2014", function (progress) { curtain = progress["curtain"];
+    stopXCoord = progress["stopDateXCoord"]; console.log(progress)});
     
-    var config4 = liquidFillGaugeDefaultSettings();
-    config4.circleThickness = 0.05;
-    config4.circleColor = "#0D7AC4";
-    config4.textColor = "navy";
-    config4.waveTextColor = "navy";
-    config4.waveColor = "#0D7AC4";
-    config4.textVertPosition = 0.8;
-    config4.waveAnimateTime = 1000;
-    config4.waveHeight = 0.05;
-    config4.waveAnimate = true;
-    config4.waveRise = false;
-    config4.waveHeightScaling = false;
-    config4.waveOffset = 0.25;
-    config4.textSize = 0.75;
-    config4.waveCount = 2;
-    var gauge5 = loadLiquidFillGauge("fillgauge5", 60.44, config4);
 }
 
+function slide2_2() {
+    curtain.transition().duration(2000).ease("linear").attr("x", stopXCoord);
+}
