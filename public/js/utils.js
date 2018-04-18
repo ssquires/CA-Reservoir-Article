@@ -216,12 +216,12 @@ function makeLineChart(containerDivID, dataFile, config, callback) {
         pauseDate = config.pauseDate,
         stopDate = config.stopDate;
     
-    var margin = {top: 15 * resNames.length, right:60, bottom: 75, left: 75};
+    var margin = {top: 45, right:60, bottom: 75, left: 80};
     
     var width = 500, height = 200;
     var svg = d3.select(containerDivID)
                 .append('svg')
-                    .attr('width', width + margin.left + margin.right)
+                    .attr("width", width + margin.left + margin.right)
                     .attr("height", height + margin.top + margin.bottom)
                     .attr("id", "line-graph")
                 .append("g")
@@ -248,7 +248,7 @@ function makeLineChart(containerDivID, dataFile, config, callback) {
     
     svg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y" , 0 - margin.left)
+      .attr("y" , 0 - margin.left + 15)
       .attr("x" ,0 - (height / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
@@ -291,7 +291,7 @@ function makeLineChart(containerDivID, dataFile, config, callback) {
         }
         
         var curtain = svg.append("rect")
-            .attr("fill", "#FFF")
+            .attr("fill", "#F4F4F4")
             .attr("stroke", "none")
             .attr("width", width + margin.right)
             .attr("height", height)
@@ -308,8 +308,8 @@ function makeLineChart(containerDivID, dataFile, config, callback) {
         var legend = svg.append("rect")
             .attr("width", margin.right)
             .attr("height", resNames.length * 17 + 5)
-            .attr("fill", "#EEE")
-            .attr("x", width)
+            .attr("fill", "#F4F4F4")
+            .attr("x", width - 10)
             .attr("y", (height - resNames.length * 17 + 5) / 2);
         
         for (var i = 0; i < resNames.length; i++) {
@@ -317,11 +317,11 @@ function makeLineChart(containerDivID, dataFile, config, callback) {
                 .attr("width", 12)
                 .attr("height", 12)
                 .attr("fill", resColors[i])
-                .attr("x", width + 10)
+                .attr("x", width)
                 .attr("y", (height - resNames.length * 17 + 5) / 2 + i * 17 + 5);
             var label = svg.append("text")
                 .text(resNames[i])
-                .attr("x", width + 25)
+                .attr("x", width + 15)
                 .attr("y", (height - resNames.length * 17 + 5) / 2 + i * 17 + 15)
                 .attr("font-size", 12)
                 .attr("class", "label")

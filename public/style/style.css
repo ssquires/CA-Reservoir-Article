@@ -3,6 +3,10 @@
     font-family: sans-serif;
 }
 
+svg {
+    background-color: #F4F4F4;
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -56,7 +60,7 @@ text {
 }
 
 #graphic {
-    width: 580px;
+    width: 650px;
     height: 400px;
     text-align: center;
     margin: auto;
@@ -65,7 +69,7 @@ text {
 
 #gauges {
     width: 300px;
-    height: 300px;
+    height: 275px;
     text-align: center;
     margin: 0;
     margin-left: 10px;
@@ -74,12 +78,15 @@ text {
 
 #vizContainer {
     display: flex;
+    width: 580px;
+    margin: auto;
     padding-top: 20px;
+    background-color: #F4F4F4;
 }
 
 #map {
     width: 250px;
-    height: 300px;
+    height: 275px;
 /*    background-color: #0D7AC4;*/
     margin: 0;
     display: inline-block;
@@ -116,6 +123,12 @@ input {
     text-align: center;
 }
 
+#slider {
+    background-color: #F4F4F4;
+    padding: 25px;
+    margin-left: 35px;
+    margin-right: 35px;
+}
 .slider {
     -webkit-appearance: none;
     width: 100%;
@@ -191,4 +204,9 @@ input {
 
 .y text {
     transform: translate(-5px, 0px);
+}
+
+#line-graph {
+    display: block;
+    margin: auto;
 }
