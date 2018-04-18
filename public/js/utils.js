@@ -3,66 +3,6 @@ var resNames = [];
 var arc;
 var gauges = {};
 
-function makePieCharts(dataFile, width, height, maxCharts) {
-    // Read in data from file
-    d3.json(dataFile, function(err, resData) {
-        if (err) return console.error(err);
-        historicalData = resData;
-    
-        var radius = Math.min(width, height) / 2;
-        
-        var color = d3.scaleOrdinal().range(["#2BC8F2", "#1D2731"]);
-
-        arc = d3.arc().outerRadius(radius - 10)
-                  .innerRadius(0);
-        
-        // Create pie charts
-        var chartNum = 0;
-        for (var key in resData[0]) {
-            if (key === "PDSI") {
-                continue;
-            }
-            if (key === "date") {
-                $("#date").text(resData[0][key]);
-                continue;
-            }
-            if (chartNum >= maxCharts) {
-                break;
-            }
-
-            resNames.push(key);
-            // Create a new div for the chart
-            var d = $("<div id='chart" + chartNum + "' class='chart'><h2 class='res-name'>" + key + "</h2></div>");
-            $("#graphic").append(d);
-
-            // Add pie chart to pies array
-            var pie = d3.pie()
-                    .value(function(d) { return d.percent }).sort(null)(resData[0][key]);
-
-            // Add pie chart to div
-            var svg = d3.select("#chart" + chartNum)
-                    .append("svg")
-                    .attr("width", width)
-                    .attr("height", height)
-                    .append("g")
-                    .attr("transform", 
-                          "translate(" + width / 2 + 
-                          "," + height / 2 + ")");
-
-            var g = svg.selectAll("arc").data(pie).enter().append("g").attr("class", "arc");
-
-            g.append("path").attr("d", arc)
-                        .style("fill", function(d) { return color(d.data.name);})
-                        .each(function(d) { this._current = d; });
-
-            var percentLabel = $("<h3 id='label" + chartNum + "'>" + resData[0][key][0]["percent"] +"%</h3>");
-            d.append(percentLabel);
-
-            chartNum++;
-        }
-    });
-}
-
 function makeFillGauges(dataFile, width, height, maxCharts, containerDiv, mapDivID) {
     // Read in data from file
     d3.json(dataFile, function(err, resData) {
@@ -94,11 +34,8 @@ function makeFillGauges(dataFile, width, height, maxCharts, containerDiv, mapDiv
             var d = $("<svg class='chartSVG' id='" + chartID + "' width='" + width + "' height='" + height + "' onclick='gauge5.update(NewValue());'></svg>");
             chartDiv.append(d);
             d.mouseover(function(e) {
-                console.log("mouseover");
                 var resName = e.target.id.split("-")[1];
-                console.log(resName)
                 $("#" + resName).attr("style", "fill: orange; stroke: orange;");
-                console.log($("#" + resName));
                 $("#" + e.target.id + " circle").attr("style", "fill: orange;");
                 $("#" + e.target.id + " path").attr("style", "fill: orange;");
             });
@@ -112,8 +49,8 @@ function makeFillGauges(dataFile, width, height, maxCharts, containerDiv, mapDiv
             var config = liquidFillGaugeDefaultSettings();
             config.circleThickness = 0.05;
             config.circleColor = "#0D7AC4";
-            config.textColor = "navy";
-            config.waveTextColor = "navy";
+            config.textColor = "#000";
+            config.waveTextColor = "#000";
             config.waveColor = "#0D7AC4";
             config.textVertPosition = 0.8;
             config.waveAnimateTime = 2000;
@@ -122,7 +59,7 @@ function makeFillGauges(dataFile, width, height, maxCharts, containerDiv, mapDiv
             config.waveRise = false;
             config.waveHeightScaling = false;
             config.waveOffset = 0.25;
-            config.textSize = 0.75;
+            config.textSize = 0.9;
             config.waveCount = 2;
             var gauge = loadLiquidFillGauge(chartID, resData[0][key][0]["percent"], config);
             
@@ -183,7 +120,7 @@ function makeMap(containerDivID) {
 
         // Map
         var projection = d3.geo.mercator()
-                .center([-119.3,37.786874])
+                .center([-119.3, 37.6])
                 .scale(scale)
                 .translate([width/2, height/2]);
 
@@ -203,7 +140,6 @@ function makeMap(containerDivID) {
             .attr("id", "ca-map");
         
         d3.json("reservoir_data.json", function(err, data) {
-            console.log(data);
             svg.selectAll('.res')
             .data(data.filter(function(resObj) {
                 return resNames.includes(resObj.Name);
@@ -260,8 +196,27 @@ function reservoirMouseout(d) {
 //////////////////////// LINE CHARTS /////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-function makeLineChart(containerDivID, dataFile, resNames, resColors, pauseDate, stopDate, callback) {
-    var margin = {top: 30, right: 20, bottom: 30, left: 50};
+function defaultLineChartConfig() {
+    return {
+        resNames: ["SHA"],
+        resColors: ["#0D7AC4"],
+        beginDate: "January 2003",
+        endDate: "December 2016",
+        pauseDate: "June 2008",
+        stopDate: "December 2016"
+    }
+}
+
+function makeLineChart(containerDivID, dataFile, config, callback) {
+    
+    var resNames = config.resNames,
+        resColors = config.resColors,
+        beginDate = config.beginDate,
+        endDate = config.endDate,
+        pauseDate = config.pauseDate,
+        stopDate = config.stopDate;
+    
+    var margin = {top: 15 * resNames.length, right:60, bottom: 75, left: 75};
     
     var width = 500, height = 200;
     var svg = d3.select(containerDivID)
@@ -277,10 +232,31 @@ function makeLineChart(containerDivID, dataFile, resNames, resColors, pauseDate,
     var y = d3.scale.linear().rangeRound([height, 0]);
     
     var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(5);
+    .orient("bottom").tickSize(8).ticks(d3.timeYear);
+    
+    svg.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + 55) + ")")
+      .style("text-anchor", "middle")
+      .attr("class", "label")
+      .style("font-size", 18)
+      .text("Date");
 
     var yAxis = d3.svg.axis().scale(y)
-    .orient("left").ticks(5);
+    .orient("left").ticks(4);
+    
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y" , 0 - margin.left)
+      .attr("x" ,0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .attr("class", "label")
+      .style("font-size", 18)
+      .text("Percent Full");
+    
+    
     
     var parseDate = d3.time.format("%B %Y").parse
     
@@ -288,9 +264,13 @@ function makeLineChart(containerDivID, dataFile, resNames, resColors, pauseDate,
     
     d3.json(dataFile, function(err, data) {
         if (err) return console.error(err);
-        
-        x.domain(d3.extent(data, function(d) {
-            return parseDate(d["date"])}));
+        for (var i = data.length - 1; i >= 0; i--) {
+            var dataDate = parseDate(data[i]["date"]);
+            if (dataDate < parseDate(beginDate) || dataDate > parseDate(endDate)) {
+                data.splice(i, 1);
+            }
+        }
+        x.domain([parseDate(beginDate), parseDate(endDate)]);
         y.domain([0, 100]);
         
         var pauseDateXCoord = x(parseDate(pauseDate));
@@ -313,7 +293,7 @@ function makeLineChart(containerDivID, dataFile, resNames, resColors, pauseDate,
         var curtain = svg.append("rect")
             .attr("fill", "#FFF")
             .attr("stroke", "none")
-            .attr("width", width)
+            .attr("width", width + margin.right)
             .attr("height", height)
             .attr("x", 0);
     
@@ -325,7 +305,31 @@ function makeLineChart(containerDivID, dataFile, resNames, resColors, pauseDate,
         
         svg.append("g").attr("class", "y axis").call(yAxis);
         
+        var legend = svg.append("rect")
+            .attr("width", margin.right)
+            .attr("height", resNames.length * 17 + 5)
+            .attr("fill", "#EEE")
+            .attr("x", width)
+            .attr("y", (height - resNames.length * 17 + 5) / 2);
+        
+        for (var i = 0; i < resNames.length; i++) {
+            var square = svg.append("rect")
+                .attr("width", 12)
+                .attr("height", 12)
+                .attr("fill", resColors[i])
+                .attr("x", width + 10)
+                .attr("y", (height - resNames.length * 17 + 5) / 2 + i * 17 + 5);
+            var label = svg.append("text")
+                .text(resNames[i])
+                .attr("x", width + 25)
+                .attr("y", (height - resNames.length * 17 + 5) / 2 + i * 17 + 15)
+                .attr("font-size", 12)
+                .attr("class", "label")
+        }
+        
         callback({"curtain": curtain, "stopDateXCoord": stopDateXCoord});
+        
+        
     });
     
 }

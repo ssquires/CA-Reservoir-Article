@@ -1,3 +1,4 @@
+
 * {
     font-family: sans-serif;
 }
@@ -9,22 +10,37 @@ body {
 
 h1 {
     text-align: center;
+    font-family: Raleway;
 }
 
 h2 {
-    margin-top: 10px;
+    margin-top: 0;
     margin-bottom: 0;
-    font-size: 16px;
+    font-size: 18px;
+    font-family: Lato;
+    font-weight: 300;
 }
 
 h3 {
     margin-top: 0;
     margin-bottom: 0;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-family: Lato;
 }
 
 p {
-    font-size: 12px;
+    font-size: 16px;
     margin: 5px;
+    font-family: Open Sans;
+}
+
+text {
+    font-family: Nova Mono, monospace;
+}
+
+.label {
+    font-family: Lato, sans-serif;
 }
 
 #buttons-and-text {
@@ -58,6 +74,7 @@ p {
 
 #vizContainer {
     display: flex;
+    padding-top: 20px;
 }
 
 #map {
@@ -102,9 +119,9 @@ input {
 .slider {
     -webkit-appearance: none;
     width: 100%;
-    height: 7px;
-    border-radius: 4px;   
-    background: #EEE;
+    height: 3px;
+    border-radius: 1px;   
+    background: #0D7AC4;
     outline: none;
     opacity: 1;
     -webkit-transition: .2s;
@@ -118,7 +135,7 @@ input {
     width: 15px;
     height: 15px;
     border-radius: 50%; 
-    background: #0D7AC4;
+    background: black;
     cursor: pointer;
 }
 
@@ -126,7 +143,7 @@ input {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #0D7AC4;
+    background: black;
     cursor: pointer;
 }
 
@@ -146,12 +163,32 @@ input {
     transition: fill .5s, stroke .5s;
 }
 
+.res-name {
+    font-family: Nova Mono;
+    font-size: 16px;
+}
+
 .domain {
-    stroke-width: 2;
+    stroke-width: 1;
     stroke: black;
     fill: none;
 }
 
 #line-graph {
     margin-top: 50px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.x text {
+    transform: translate(0px, 5px);
+}
+
+.y text {
+    transform: translate(-5px, 0px);
 }
