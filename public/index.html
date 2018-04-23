@@ -18,15 +18,26 @@
     <div id="text">
         <p id="slide-1">&emsp;&emsp;In August 2014, people the town of Montague near Shasta Mountain in California were limited to 5.000 gallons of water per home. That might sound like a lot - but what does it mean to the average family in Montague?</p>
         <p id="slide-1-2" style="display: none;">&emsp;&emsp;The average person showers for XXX minutes, using YYY gallons of water in the process. For 2.5 people...</p>
-        <p id="slide-2" style="display: none;">&emsp;&emsp;Reservoirs are typically at their lowest in November before they recharge during the winter season. Here is a historical time series of three reservoirs in the California reservoir network from January 2003-November 2012. Can you predict whether any reservoir reaches below 10% capacity (a typical critical volume set out by water managers) from December 2012 - November 2016?</p>
-        <p id="slide-2-2" style="display: none;">&emsp;&emsp;It is hard to guess what will happen based purely on historial water level data, especially for each individual reservoir.</p>
+        <p id="slide-2" style="display: none;">&emsp;&emsp;In order to properly manage water, particularly during drought conditions, reservoir managers need to be able to evaluate the risk, or probability, that any particular reservoir has of being exhausted.</p>
+        <p id="slide-2-2" style="display: none;">&emsp;&emsp;Reservoirs are typically at their lowest in November before they recharge during the winter season. Here is a historical time series of three reservoirs in the California reservoir network from January 2003-November 2012. Can you predict whether any reservoir reaches below 10% capacity (a typical critical volume set out by water managers) from December 2012 - November 2016?</p>
+        <p id="slide-2-3" style="display: none;">&emsp;&emsp;It is hard to guess what will happen based purely on historial water level data, especially for each individual reservoir.</p>
         <div id="slide-3" style="display: none;">
             <p>&emsp;&emsp;Presented here is a sample of major reservoirs in the four main hydrological zones of California. As time progresses and drought status fluctuates, we uncover the complexities that water managers have to deal with. How can they analyze this data to create best practices in water management? And can it be applied to understand exactly <strong>when</strong> and <strong>where</strong> we are most at risk of exhausting our resources?</p>
             <p>&emsp;&emsp;Our data analysis tool must address the two challenges: <strong>reservoir interdependencies</strong> and <strong>impact of external factors</strong>.</p>
         </div>
-        <p id="slide-4" style="display: none;">&emsp;&emsp;It turns out - yes we can - but first we need to introduce a number called PDSI.</p>
-        <p id="slide-5" style="display: none;">&emsp;&emsp;Reservoirs are not independent systems. They are interdependent and also depend on external factors such as PDSI. If we ignore external factors for now and just correlate the historical water levels of different reservoirs - this is what we get.</p>
-        <p id="slide-6" style="display: none;">&emsp;&emsp;Once we include PDSI as a variable - it turns out a lot of the connections between reservoirs were just shared dependencies on PDSI. But this gives us another tool - for these reservoirs - we can now quantify their correlation/dependence on PDSI.</p>
+        <div id="slide-4" style="display: none;">
+            <p>&emsp;&emsp;Reservoirs are interdependent.</p>
+        </div>
+        <div id="slide-4-2" style="display: none;">
+           <p>&emsp;&emsp;As an example, if the water manager of Folsom lake shuts off water release, that will impact reservoirs Don Pedro and Indian Valley that may now need to supply more water to account for Folsom. A natural approach to characterize these interdependencies is a graphical model where reservoirs are nodes and edges denote the strength of the dependencies.</p>
+            <p>&emsp;&emsp;Using data, we can learn the graph structure and precisely characterize how for example change of management of Folsom lake impacts the other reservoirs.</p>
+        </div>
+        <div id="slide-4-3" style="display: none;">
+            <p>&emsp;&emsp;There are also external factors at play: reservoir behavior can be very strongly dependent to drought level (represented by Palmer Drought Severity Index), snowpack, and temperature as well as economic indicators such as the amount of agricultural output. We can add these factors into our graphical model as external variables.</p>
+            <p>&emsp;&emsp;Using data, we can answer the question: If the drought gets worse, what is the risk of reservoirs reaching critical capacities?</p>
+        </div>
+        <p id="slide-5" style="display: none;">&emsp;&emsp;We can now re-visit the example from earlier but looking at calculated risk.</p>
+        <p id="slide-6" style="display: none;">&emsp;&emsp;</p>
         <p id="slide-7" style="display: none;">&emsp;&emsp;Wat</p>
         <p id="slide-8" style="display: none;">&emsp;&emsp;We can now revisit our view of California and instead of water-level, look at the risk that the water level will fall below a certain level!</p>
         <p id="slide-9" style="display: none;">&emsp;&emsp;Now we can look back at the case study and ask - how far in advance could we estimate the risk the water would have reached 10% capacity?</p>
@@ -42,10 +53,6 @@
     <script src="js/slide4.js"></script>
     <script src="js/slide5.js"></script>
     <script src="js/slide6.js"></script>
-    <script src="js/slide7.js"></script>
-    <script src="js/slide8.js"></script>
-    <script src="js/slide9.js"></script>
-    <script src="js/slide10.js"></script>
     <script src="js/viz_controls.js"></script>
 </body>
 </html>
