@@ -8,6 +8,6 @@ function slide3() {
     vizContainer.append(mapDiv);
     vizContainer.append(gaugesDiv);
     $("#graphic").append(sliderDiv);
-    makeFillGauges("historical_data.json", 65, 65, 12, gaugesDiv, "#map");
+    makeFillGauges("historical_data.json", 70, 70, 12, gaugesDiv, "#map");
     makeSlider("historical_data.json", sliderDiv);
 }
