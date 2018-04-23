@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Reservoir History</title>
+  <title>California Reservoirs</title>
   <link rel='stylesheet' href='style/style.css' />
     <link href="https://fonts.googleapis.com/css?family=Raleway:200|Open+Sans|Lato|Nova+Mono" rel="stylesheet">
 </head>
 <body>
-    <h1>Water Article</h1>
+    <h1>California Reservoirs</h1>
     <div id="header">
         
     </div>
-    <div id="graphic">
-        <img id="placeholder" src="slide1.png" width="100%">
+    <div id="graphic-container">
+        <div id="graphic">
+            <img id="placeholder" src="slide1_1.png" width="100%">
+        </div>
     </div>
-    <div id="buttons-and-text">
-        <div class="button-div">
-            <button onclick="prevSlide()">&lt</button>
+    <div id="text">
+        <p id="slide-1">&emsp;&emsp;In August 2014, people the town of Montague near Shasta Mountain in California were limited to 5.000 gallons of water per home. That might sound like a lot - but what does it mean to the average family in Montague?</p>
+        <p id="slide-1-2" style="display: none;">&emsp;&emsp;The average person showers for XXX minutes, using YYY gallons of water in the process. For 2.5 people...</p>
+        <p id="slide-2" style="display: none;">&emsp;&emsp;Reservoirs are typically at their lowest in November before they recharge during the winter season. Here is a historical time series of three reservoirs in the California reservoir network from January 2003-November 2012. Can you predict whether any reservoir reaches below 10% capacity (a typical critical volume set out by water managers) from December 2012 - November 2016?</p>
+        <p id="slide-2-2" style="display: none;">&emsp;&emsp;It is hard to guess what will happen based purely on historial water level data, especially for each individual reservoir.</p>
+        <div id="slide-3" style="display: none;">
+            <p>&emsp;&emsp;Presented here is a sample of major reservoirs in the four main hydrological zones of California. As time progresses and drought status fluctuates, we uncover the complexities that water managers have to deal with. How can they analyze this data to create best practices in water management? And can it be applied to understand exactly <strong>when</strong> and <strong>where</strong> we are most at risk of exhausting our resources?</p>
+            <p>&emsp;&emsp;Our data analysis tool must address the two challenges: <strong>reservoir interdependencies</strong> and <strong>impact of external factors</strong>.</p>
         </div>
-        <div id="text">
-            <p id="slide-1">In August 2014, people in the town of Montague near Shasta Mountain in California were limited to 5,000 gallons of water per home...</p>
-            <p id="slide-2" style="display: none;">How early could we have known this would happen? We have date on reservoir levels over time-- check out these 3 reservoirs. Which one(s) should we be worried about?</p>
-            <p id="slide-2-2" style="display: none;">Look, they do different things! This data isn't enough...</p>
-            <p id="slide-3" style="display: none;">All over California - we have this water-level data, but can it be used to help us understand when and where we are most at risk of exhaustion?</p>
-            <p id="slide-4" style="display: none;">It turns out - yes we can - but first we need to introduce a number called PDSI.</p>
-            <p id="slide-5" style="display: none;">Reservoirs are not independent systems. They are interdependent and also depend on external factors such as PDSI. If we ignore external factors for now and just correlate the historical water levels of different reservoirs - this is what we get.</p>
-            <p id="slide-6" style="display: none;">Once we include PDSI as a variable - it turns out a lot of the connections between reservoirs were just shared dependencies on PDSI. But this gives us another tool - for these reservoirs - we can now quantify their correlation/dependence on PDSI.</p>
-            <p id="slide-7" style="display: none;">Wat</p>
-            <p id="slide-8" style="display: none;">We can now revisit our view of California and instead of water-level, look at the risk that the water level will fall below a certain level!</p>
-            <p id="slide-9" style="display: none;">Now we can look back at the case study and ask - how far in advance could we estimate the risk the water would have reached 10% capacity?</p>
-            <p id="slide-10" style="display: none;">Discussion of how this could be used in policy - barriers etc.</p>
-        </div>
-        <div class="button-div">
-            <button onclick="nextSlide()">&gt</button>
-        </div>
+        <p id="slide-4" style="display: none;">&emsp;&emsp;It turns out - yes we can - but first we need to introduce a number called PDSI.</p>
+        <p id="slide-5" style="display: none;">&emsp;&emsp;Reservoirs are not independent systems. They are interdependent and also depend on external factors such as PDSI. If we ignore external factors for now and just correlate the historical water levels of different reservoirs - this is what we get.</p>
+        <p id="slide-6" style="display: none;">&emsp;&emsp;Once we include PDSI as a variable - it turns out a lot of the connections between reservoirs were just shared dependencies on PDSI. But this gives us another tool - for these reservoirs - we can now quantify their correlation/dependence on PDSI.</p>
+        <p id="slide-7" style="display: none;">&emsp;&emsp;Wat</p>
+        <p id="slide-8" style="display: none;">&emsp;&emsp;We can now revisit our view of California and instead of water-level, look at the risk that the water level will fall below a certain level!</p>
+        <p id="slide-9" style="display: none;">&emsp;&emsp;Now we can look back at the case study and ask - how far in advance could we estimate the risk the water would have reached 10% capacity?</p>
+        <p id="slide-10" style="display: none;">&emsp;&emsp;Discussion of how this could be used in policy - barriers etc.</p>
     </div>
     <script src='//d3js.org/d3.v3.min.js' charset='utf-8'></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

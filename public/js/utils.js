@@ -291,7 +291,7 @@ function makeLineChart(containerDivID, dataFile, config, callback) {
         }
         
         var curtain = svg.append("rect")
-            .attr("fill", "#F4F4F4")
+            .attr("fill", "#FFF")
             .attr("stroke", "none")
             .attr("width", width + margin.right)
             .attr("height", height)
@@ -308,7 +308,7 @@ function makeLineChart(containerDivID, dataFile, config, callback) {
         var legend = svg.append("rect")
             .attr("width", margin.right)
             .attr("height", resNames.length * 17 + 5)
-            .attr("fill", "#F4F4F4")
+            .attr("fill", "#FFF")
             .attr("x", width - 10)
             .attr("y", (height - resNames.length * 17 + 5) / 2);
         

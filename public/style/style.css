@@ -3,10 +3,6 @@
     font-family: sans-serif;
 }
 
-svg {
-    background-color: #F4F4F4;
-}
-
 body {
     padding: 0;
     margin: 0;
@@ -14,7 +10,8 @@ body {
 
 h1 {
     text-align: center;
-    font-family: Raleway;
+    font-family: Lato;
+    font-size: 50px;
 }
 
 h2 {
@@ -34,7 +31,7 @@ h3 {
 }
 
 p {
-    font-size: 16px;
+    font-size: 18px;
     margin: 5px;
     font-family: Open Sans;
 }
@@ -48,23 +45,32 @@ text {
 }
 
 #buttons-and-text {
-    text-align: center;
     display: flex;
     margin: auto;
     max-width: 700px;
 }
 
+.button-div {
+    text-align: center;
+}
+
 #text {
-    display: inline-block;
     flex: 4;
+    min-width: 500px;
+    max-width: 600px;
+    margin: auto;
+}
+
+#graphic-container {
+    display: flex;
+    align-items: center;
+    height: 420px;
 }
 
 #graphic {
     width: 650px;
-    height: 400px;
     text-align: center;
     margin: auto;
-    align-items: center;
 }
 
 #gauges {
@@ -81,7 +87,6 @@ text {
     width: 580px;
     margin: auto;
     padding-top: 20px;
-    background-color: #F4F4F4;
 }
 
 #map {
@@ -124,7 +129,6 @@ input {
 }
 
 #slider {
-    background-color: #F4F4F4;
     padding: 25px;
     margin-left: 35px;
     margin-right: 35px;

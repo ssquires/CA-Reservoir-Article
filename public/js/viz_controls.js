@@ -1,11 +1,16 @@
 
 
-var slideNav = {"Slide 1": {  func: slide1,
-                              next: "Slide 2.1",
+var slideNav = {"Slide 1.1": {  func: slide1,
+                              next: "Slide 1.2",
                               clear: true,
                               text: "#slide-1"},
+                "Slide 1.2": { func: slide1_2,
+                              next: "Slide 2.1",
+                              prev: "Slide 1.1",
+                              clear: true,
+                              text: "#slide-1-2"},
                 "Slide 2.1": { func: slide2,
-                               prev: "Slide 1",
+                               prev: "Slide 1.2",
                                next: "Slide 2.2",
                                clear: true,
                               text: "#slide-2"},
@@ -55,7 +60,7 @@ var slideNav = {"Slide 1": {  func: slide1,
                               text: "#slide-10"}
                }
 
-var currSlide = "Slide 1";
+var currSlide = "Slide 1.1";
 
 
 function nextSlide() {
@@ -90,5 +95,13 @@ function clearSlides() {
     for (var slide in slideNav) {
         console.log(slide)
         $(slideNav[slide].text).css("display", "none");
+    }
+}
+
+document.onkeydown = function (e) {
+    if (e.keyCode == "37") {
+        prevSlide();
+    } else if (e.keyCode == "39") {
+        nextSlide();
     }
 }
