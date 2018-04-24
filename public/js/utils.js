@@ -4,11 +4,11 @@ var arc;
 var gauges = {};
 
 
-function makeWaterBuckets(containerDivID, countX, countY, amountPerBucket, width, height) {
+function makeWaterBuckets(containerDivID, countX, countY, amountPerBucket, width, height, marginBottom) {
     // SVG Canvas
     var svg = d3.select(containerDivID).append("svg")
                                      .attr("width", width)
-                                     .attr("height", height)
+                                     .attr("height", height + marginBottom)
                                      .attr("id", "buckets");
     
     // Calculations
@@ -33,6 +33,31 @@ function makeWaterBuckets(containerDivID, countX, countY, amountPerBucket, width
             bucketNum++;
         }
     }
+    
+    var endY = bucketSpace * countY;
+    
+    // Make legend
+    var square = svg.append("rect")
+                .attr("x", margin / 2)
+                .attr("y", endY + marginBottom / 2)
+                .attr("width", bucketSize)
+                .attr("height", bucketSize)
+                .attr("fill", "#0D7AC4");
+    
+    var label = svg.append("text")
+                .text("= " + amountPerBucket + " gallons")
+                .attr("x", bucketSpace + margin / 2)
+                .attr("y", endY + marginBottom / 2 + bucketSize)
+                .attr("font-size", 18)
+                .attr("class", "label");
+    
+    var gallonsRemaining = svg.append("text")
+                .text(countX * countY * amountPerBucket + " gallons remaining")
+                .attr("x", width / 2 - 100)
+                .attr("y", endY + marginBottom / 2 + bucketSize)
+                .attr("font-size", 18)
+                .attr("class", "label")
+                .attr("id", "gallons-remaining");
 }
 
 function updateWaterBuckets(newVolume, countX, countY, amountPerBucket) {
@@ -48,6 +73,8 @@ function updateWaterBuckets(newVolume, countX, countY, amountPerBucket) {
     for (var b = bucketsToRemove + 1; b < countX * countY; b++) {
         $("#bucket" + b).attr("fill", "#0D7AC4");
     }
+    
+    $("#gallons-remaining").text(newVolume + " gallons remaining");
 
 }
 

@@ -1,6 +1,6 @@
 function slide1() {
     console.log("Displaying Slide 1.1");
-    makeWaterBuckets("#graphic", 25, 10, 20, 600, 300)
+    makeWaterBuckets("#graphic", 25, 10, 20, 600, 300, 50);
 }
 
 function slide1_2() {
