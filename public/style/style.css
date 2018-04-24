@@ -214,3 +214,8 @@ input {
     display: block;
     margin: auto;
 }
+
+.bucket {
+    -webkit-transition: 1s;
+    transition: fill 1s ease;
+}

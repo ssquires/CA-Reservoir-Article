@@ -3,6 +3,54 @@ var resNames = [];
 var arc;
 var gauges = {};
 
+
+function makeWaterBuckets(containerDivID, countX, countY, amountPerBucket, width, height) {
+    // SVG Canvas
+    var svg = d3.select(containerDivID).append("svg")
+                                     .attr("width", width)
+                                     .attr("height", height)
+                                     .attr("id", "buckets");
+    
+    // Calculations
+    var bucketSpace = Math.min(width / countX, height / countY);
+    var margin = bucketSpace / 8;
+    var bucketSize = bucketSpace - 2 * margin;
+    console.log(x);
+    console.log(margin);
+    console.log(width);
+    console.log(bucketSpace);
+    var bucketNum = 1;
+    for (var y = 0; y < countY; y += 1) {
+        for (var x = 0; x < countX; x += 1) {
+            var rect = svg.append("rect")
+                        .attr("x", margin / 2 + x * bucketSpace)
+                        .attr("y", margin / 2 + y * bucketSpace)
+                        .attr("width", bucketSize)
+                        .attr("height", bucketSize)
+                        .attr("fill", "#0D7AC4")
+                        .attr("id", "bucket" + bucketNum)
+                        .attr("class", "bucket");
+            bucketNum++;
+        }
+    }
+}
+
+function updateWaterBuckets(newVolume, countX, countY, amountPerBucket) {
+    // Calculations
+    var totalVolume = countX * countY * amountPerBucket;
+    var removedVolume = totalVolume - newVolume;
+    
+    var bucketsToRemove = Math.round(removedVolume / amountPerBucket);
+    
+    for (var b = 1; b <= bucketsToRemove; b++) {
+        $("#bucket" + b).attr("fill", "#DDD");
+    }
+    for (var b = bucketsToRemove + 1; b < countX * countY; b++) {
+        $("#bucket" + b).attr("fill", "#0D7AC4");
+    }
+
+}
+
 function makeFillGauges(dataFile, width, height, maxCharts, containerDiv, mapDivID) {
     // Read in data from file
     d3.json(dataFile, function(err, resData) {
