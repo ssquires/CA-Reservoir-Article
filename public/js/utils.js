@@ -47,14 +47,14 @@ function makeWaterBuckets(containerDivID, countX, countY, amountPerBucket, width
     var label = svg.append("text")
                 .text("= " + amountPerBucket + " gallons")
                 .attr("x", bucketSpace + margin / 2)
-                .attr("y", endY + marginBottom / 2 + bucketSize)
+                .attr("y", endY + marginBottom / 2 + bucketSize - margin)
                 .attr("font-size", 18)
                 .attr("class", "label");
     
     var gallonsRemaining = svg.append("text")
                 .text(countX * countY * amountPerBucket + " gallons remaining")
                 .attr("x", width / 2 - 100)
-                .attr("y", endY + marginBottom / 2 + bucketSize)
+                .attr("y", endY + marginBottom / 2 + bucketSize - margin)
                 .attr("font-size", 18)
                 .attr("class", "label")
                 .attr("id", "gallons-remaining");
